@@ -1,0 +1,57 @@
+body {
+	color: #5A6066;
+	font-family: "Open Sans", Arial, sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+	background: #fff;
+}
+
+#login-container h1 {
+	color: #349AFF;
+	font-weight: 300;
+}
+
+#login-container input {
+	padding: 9px 10px;
+}
+
+#login-container input[type="submit"] {
+	border: 1px solid #C9C8C7;
+	font-size: 14px;
+	color: #FFF;
+	background: #349AFF;
+	border-radius: 3px;
+}
+
+#login-container input[type="text"], #login-container input[type="password"] {
+	font-size: 14px;
+	border-radius: 2px;
+	border: 1px solid #C9C8C7;
+}
+
+#drop-area {
+	min-height: 150px;
+	width: 250px;
+	border: 1px solid blue;
+	margin: 10px;
+	padding: 10px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+#lister-table {
+
+}
+
+#lister-table > tbody > tr:nth-child(odd) > td {
+	border-left: 5px solid #349AFF;
+}
+
+#lister-table > tbody > tr:nth-child(even) > td {
+	border-left: 5px solid #DC4529;
+}
+
+.ui-hidden {
+	display: none;
+}
