@@ -1,7 +1,6 @@
 <?php
 
 class Webstorage {
-	
 	public $storagePath;
 
 	public function __construct() {
@@ -9,9 +8,9 @@ class Webstorage {
 	}
 
 	private function initLocation() {
-		$this->storagePath = substr(SITE_ROOT, 0, strpos(SITE_ROOT, "var/"));
-		$this->storagePath.= 'webstorage/bundle/'.Auth::getUser()->username.'/';
+		$this->storagePath = substr(SITE_ROOT, 0, strpos(SITE_ROOT, "www/"));
+		$this->storagePath.= 'webapps/storage/bundle/'.Auth::getUser()->username.'/';
 		if (file_exists($this->storagePath)) return;
-		mkdir($this->storagePath);
+		mkdir($this->storagePath, 0777, true);
 	}
 }

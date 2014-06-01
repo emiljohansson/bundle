@@ -1,0 +1,25 @@
+RewriteEngine On
+
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+
+RewriteRule ^/?([a-z]+)/$									./?controller=$1 [L,QSA]
+
+RewriteRule ^/?([a-z]+)/$									./?controller=$1 [L]
+RewriteRule ^/?([a-z]+)/([a-z0-9]+)/$						./?controller=$1&service=$2 [L]
+RewriteRule ^/?([a-z]+)/([a-z]+)/([a-z]+)/$				./?controller=$1&service=$2&method=$3 [L]
+RewriteRule ^/?([a-z]+)/([a-z]+)/([0-9]+)/$					./?controller=$1&service=$2&method=$3 [L]
+RewriteRule ^/?([a-z]+)/([a-z]+)/([a-z]+)/$					./?controller=$1&service=$2&method=$3&output=$4 [L]
+RewriteRule ^/?([a-z]+)/([a-z]+)/([a-z]+)/([a-z0-9\s]+)/$	./?controller=$1&service=$2&method=$3&output=$4 [L]
+
+RewriteRule ^(.*)/$ 										./$1 [L,R=301]
+RewriteRule ^/?([a-z]+)$ 									./?controller=$1 [L]
+RewriteRule ^/?([a-z]+)/([a-z0-9]+)$ 						./?controller=$1&service=$2 [L]
+RewriteRule ^/?([a-z]+)/([a-z]+)/([a-z]+)$					./?controller=$1&service=$2&method=$3 [L]
+RewriteRule ^/?([a-z]+)/([a-z]+)/([0-9]+)$					./?controller=$1&service=$2&method=$3 [L]
+RewriteRule ^/?([a-z]+)/([a-z]+)/([a-z]+)/([a-z0-9\s]+)$	./?controller=$1&service=$2&method=$3&output=$4 [L]
+
+RewriteRule ^/?([a-z]+).(xml|json)$							./?controller=$1&format=$2 [L]
+RewriteRule ^/?([a-z]+)/([a-z]+).(xml|json)$				./?controller=$1&service=$2&format=$3 [L]
+RewriteRule ^/?([a-z]+)/([a-z]+)/([a-z]+).(xml|json)$				./?controller=$1&service=$2&method=$3&format=$4 [L]
+RewriteRule ^/?([a-z]+)/([a-z]+)/([a-z]+)/([a-z0-9\s]+).(xml|json)$	./?controller=$1&service=$2&method=$3&output=$4&format=$5 [L]

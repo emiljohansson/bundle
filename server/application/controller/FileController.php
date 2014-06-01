@@ -1,7 +1,7 @@
-<?php 
+<?php
 
 class FileController extends Controller {
-	
+
 	private $webstorage;
 
 	public function __construct() {
@@ -43,7 +43,7 @@ class FileController extends Controller {
 		 	case 'jpeg':
 				$this->renderImage($file);
 				break;
-			
+
 			default:
 				$this->renderText($file);
 				break;
@@ -97,13 +97,13 @@ class FileController extends Controller {
 		/*
 		This function takes a path to a file to output ($file),  the filename that the browser will see ($name) and  the MIME type of the file ($mime_type, optional).
 		*/
-		
+
 		//Check the file premission
 		if(!is_readable($file)) die('File not found or inaccessible!');
-		
+
 		$size = filesize($file);
 		$name = rawurldecode($name);
-		
+
 		/* Figure out the MIME type | Check in array */
 		$known_mime_types=array(
 			"pdf" => "application/pdf",
@@ -121,7 +121,7 @@ class FileController extends Controller {
 			"jpg" =>  "image/jpg",
 			"php" => "text/plain"
 		);
-		
+
 		if($mime_type==''){
 			$file_extension = strtolower(substr(strrchr($file,"."),1));
 			if(array_key_exists($file_extension, $known_mime_types)){
@@ -130,25 +130,25 @@ class FileController extends Controller {
 				$mime_type="application/force-download";
 			};
 		};
-		
+
 		//turn off output buffering to decrease cpu usage
-		@ob_end_clean(); 
-		
+		@ob_end_clean();
+
 		// required for IE, otherwise Content-Disposition may be ignored
 		if(ini_get('zlib.output_compression'))
 		 ini_set('zlib.output_compression', 'Off');
-		
+
 		header('Content-Type: ' . $mime_type);
 		header('Content-Disposition: attachment; filename="'.$name.'"');
 		header("Content-Transfer-Encoding: binary");
 		header('Accept-Ranges: bytes');
-		
-		/* The three lines below basically make the 
+
+		/* The three lines below basically make the
 		   download non-cacheable */
 		header("Cache-control: private");
 		header('Pragma: private');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-		
+
 		// multipart-download and download resuming support
 		if(isset($_SERVER['HTTP_RANGE']))
 		{
@@ -175,7 +175,7 @@ class FileController extends Controller {
 			$new_length=$size;
 			header("Content-Length: ".$size);
 		}
-		
+
 		/* Will output the file itself */
 		$chunksize = 1*(1024*1024); //you may want to change this
 		$bytes_send = 0;
@@ -183,9 +183,9 @@ class FileController extends Controller {
 		{
 			if(isset($_SERVER['HTTP_RANGE']))
 			fseek($file, $range);
-		
-			while(!feof($file) && 
-				(!connection_aborted()) && 
+
+			while(!feof($file) &&
+				(!connection_aborted()) &&
 				($bytes_send<$new_length)
 			     )
 			{

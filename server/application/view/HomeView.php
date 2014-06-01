@@ -17,7 +17,7 @@ class HomeView extends View {
 		 	case 'jpeg':
 		 		$this->addImageRow($file);
 		 		break;
-		 	
+
 		 	default:
 		 		$this->addTextRow($file);
 		 		break;
@@ -67,7 +67,7 @@ class HomeView extends View {
 		$hpanel->add(new Anchor('preview', 'file/?preview='.$file->basename));
 
 		$icon = new Icon('glyphicon glyphicon-download');
-		$link = new Link('', 'file/?remove='.$file->basename, $icon);
+		$link = new Link('', 'file/?download='.$file->basename, $icon);
 
 		$hpanel->add($link);
 		$this->addRemoveLink($file, $hpanel);
