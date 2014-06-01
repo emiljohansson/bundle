@@ -64,19 +64,23 @@ class HomeView extends View {
 	private function addTextRow(File $file) {
 		$hpanel = new HorizontalPanel();
 		$hpanel->add(new Label($file->basename));
-		$hpanel->add(new Anchor('preview', 'file/?preview='.$file->basename));
+
+		$icon = new Icon('fa fa-eye');
+		$link = new Link('Preview', 'file/?preview='.$file->basename, $icon);
+		$hpanel->add($link);
 
 		$icon = new Icon('glyphicon glyphicon-download');
-		$link = new Link('', 'file/?download='.$file->basename, $icon);
-
+		$link = new Link('Download', 'file/?download='.$file->basename, $icon);
 		$hpanel->add($link);
+
 		$this->addRemoveLink($file, $hpanel);
+
 		$this->lister->add($hpanel);
 	}
 
 	private function addRemoveLink(File $file, Panel $panel) {
 		$icon = new Icon('glyphicon glyphicon-trash');
-		$link = new Link('', 'file/?remove='.$file->basename, $icon);
+		$link = new Link('Remove', 'file/?remove='.$file->basename, $icon);
 		$panel->add($link);
 	}
 }
