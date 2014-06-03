@@ -2,7 +2,7 @@
 
 class FileController extends Controller {
 
-	private $webstorage;
+	protected $webstorage;
 
 	public function __construct() {
 		parent::__construct();
@@ -70,7 +70,7 @@ class FileController extends Controller {
 		}
 	}
 
-	private function remove() {
+	protected function remove() {
 		$file = new File($this->webstorage->storagePath.$_GET['remove']);
 		if (file_exists($file->fullpath) === false) {
 			$this->view->add(new Label('File does not exist'));

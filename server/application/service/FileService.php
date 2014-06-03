@@ -7,9 +7,16 @@ class FileService extends Service {
 			return;
 		}
 
-		$this->webstorage = new Webstorage();
-		$filename = $this->webstorage->storagePath."/" . $_FILES["file"]["name"];
-		
+		$folder = "";
+		if (isset($_POST['path'])) {
+			$folder = $_POST['path'];
+		}
+		else {
+			$this->webstorage = new Webstorage();
+			$folder = $this->webstorage->storagePath;
+		}
+		$filename = $folder.'/'.$_FILES["file"]["name"];
+
 		if (!move_uploaded_file($_FILES["file"]["tmp_name"], $filename)) {
 			$this->view->setStatusToError("Possible file upload attack!");
 			return;

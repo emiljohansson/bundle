@@ -8,15 +8,17 @@ class HomeController extends Controller {
 		parent::__construct();
 		$this->initWebstorage();
 		$this->getFilesForUser();
+		$this->view->init();
 	}
 
 	public function initView() {
 		$this->view = new HomeView();
-		$this->view->init();
 	}
 
 	private function initWebstorage() {
 		$this->webstorage = new Webstorage();
+		$this->view->storagePath = $this->webstorage->storagePath;
+		$this->view->localPath = $this->webstorage->localPath;
 	}
 
 	private function getFilesForUser() {

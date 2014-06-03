@@ -2,19 +2,25 @@
 
 class HomeView extends View {
 
+	public $storagePath;
+	public $localPath;
 	private $lister;
+
+	public function __construct() {
+		parent::__construct();
+		$this->initLister();
+	}
 
 	public function init() {
 		$this->initFolderForm();
 		$this->initUploadForm();
-		$this->initLister();
 	}
 
 	public function addFolderRow(Folder $folder) {
 		$hpanel = new HorizontalPanel();
 
 		$icon = new Icon('fa fa-folder');
-		$link = new Link($folder->basename, 'folder/'.$folder->basename, $icon);
+		$link = new Link($folder->basename, '?folder='.$this->localPath.'/'.$folder->basename, $icon);
 		$hpanel->add($link);
 
 		$this->addRemoveLink($folder, $hpanel);
@@ -42,6 +48,10 @@ class HomeView extends View {
 		$form->setAction('api/folder/add');
 		$form->setMethod(FormPanel::METHOD_POST);
 
+		$input = new Hidden($this->storagePath);
+		$input->setName('path');
+		$form->add($input);
+
 		$input = new Input();
 		$input->setName('folderName');
 		$form->add($input);
@@ -58,6 +68,10 @@ class HomeView extends View {
 		$form->setAction('api/file/upload');
 		$form->setMethod(FormPanel::METHOD_POST);
 		$form->setAttribute('enctype', 'multipart/form-data');
+
+		$input = new Hidden($this->storagePath);
+		$input->setName('path');
+		$form->add($input);
 
 		$input = new Input();
 		$input->setType('file');
