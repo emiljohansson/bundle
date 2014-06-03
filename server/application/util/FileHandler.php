@@ -2,7 +2,8 @@
 
 class FileHandler {
 
-	public $list = array();
+	public $files = array();
+	public $folders = array();
 
 	public function __construct($directory) {
 		if (!file_exists($directory)) return;
@@ -11,27 +12,35 @@ class FileHandler {
 	}
 
 	private function findAllFiles($directory) {
-		$root	= scandir($directory);
-		$result	= array();
-		foreach($root as $value) { 
+		$root = scandir($directory);
+		$result = array(
+			"files" => array(),
+			"folders" => array()
+		);
+		foreach($root as $value) {
 			if($value === '.' || $value === '..' || $value === '.DS_Store') {
 				continue;
-			} 
+			}
 			if(is_file("$directory/$value")) {
-				$result[] = "$directory/$value";
+				$result['files'][] = "$directory/$value";
 				continue;
 			}
-			foreach(find_all_files("$directory/$value") as $value) {
-				$result[]=$value;
+			if (is_dir("$directory/$value")) {
+				$result['folders'][] = "$directory/$value";
+				continue;
 			}
 		}
-	    return $result;
+		return $result;
 	}
 
 	private function populateList(array $result) {
-		foreach ($result as $path) {
+		foreach ($result['files'] as $path) {
 			$file = new File($path);
-			$this->list[] = $file;
+			$this->files[] = $file;
+		}
+		foreach ($result['folders'] as $path) {
+			$folder = new Folder($path);
+			$this->folders[] = $folder;
 		}
 	}
 }

@@ -5,8 +5,21 @@ class HomeView extends View {
 	private $lister;
 
 	public function init() {
+		$this->initFolderForm();
 		$this->initUploadForm();
 		$this->initLister();
+	}
+
+	public function addFolderRow(Folder $folder) {
+		$hpanel = new HorizontalPanel();
+
+		$icon = new Icon('fa fa-folder');
+		$link = new Link($folder->basename, 'folder/'.$folder->basename, $icon);
+		$hpanel->add($link);
+
+		$this->addRemoveLink($folder, $hpanel);
+
+		$this->lister->add($hpanel);
 	}
 
 	public function addFileRow(File $file) {
@@ -22,6 +35,22 @@ class HomeView extends View {
 		 		$this->addTextRow($file);
 		 		break;
 		 }
+	}
+
+	private function initFolderForm() {
+		$form = new FormPanel();
+		$form->setAction('api/folder/add');
+		$form->setMethod(FormPanel::METHOD_POST);
+
+		$input = new Input();
+		$input->setName('folderName');
+		$form->add($input);
+
+		$submit = new Input("Submit");
+		$submit->setType('submit');
+		$form->add($submit);
+
+		$this->add($form);
 	}
 
 	private function initUploadForm() {
@@ -63,10 +92,10 @@ class HomeView extends View {
 
 	private function addTextRow(File $file) {
 		$hpanel = new HorizontalPanel();
-		$hpanel->add(new Label($file->basename));
+		$hpanel->add(new Label());
 
 		$icon = new Icon('fa fa-eye');
-		$link = new Link('Preview', 'file/?preview='.$file->basename, $icon);
+		$link = new Link($file->basename, 'file/?preview='.$file->basename, $icon);
 		$hpanel->add($link);
 
 		$icon = new Icon('glyphicon glyphicon-download');
@@ -80,7 +109,7 @@ class HomeView extends View {
 
 	private function addRemoveLink(File $file, Panel $panel) {
 		$icon = new Icon('glyphicon glyphicon-trash');
-		$link = new Link('Remove', 'file/?remove='.$file->basename, $icon);
+		$link = new Link('Remove', $file->type.'/?remove='.$file->basename, $icon);
 		$panel->add($link);
 	}
 }

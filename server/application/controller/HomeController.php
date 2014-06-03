@@ -1,7 +1,7 @@
 <?php
 
 class HomeController extends Controller {
-	
+
 	private $webstorage;
 
 	public function __construct() {
@@ -21,9 +21,15 @@ class HomeController extends Controller {
 
 	private function getFilesForUser() {
 		$fileHandler = new FileHandler($this->webstorage->storagePath);
-		if (count($fileHandler->list) === 0) return;
-		foreach ($fileHandler->list as $file) {
-			$this->view->addFileRow($file);
+		if (count($fileHandler->folders) > 0) {
+			foreach ($fileHandler->folders as $folder) {
+				$this->view->addFolderRow($folder);
+			}
+		}
+		if (count($fileHandler->files) > 0) {
+			foreach ($fileHandler->files as $file) {
+				$this->view->addFileRow($file);
+			}
 		}
 	}
 }

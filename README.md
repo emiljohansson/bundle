@@ -1,4 +1,10 @@
 bundle
 ======
 
-Web-based filemanager
+Web-based filemanager.
+
+
+
+##Dependencies
+
+https://github.com/emiljohansson/phplibrary/

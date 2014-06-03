@@ -1,6 +1,7 @@
 <?php
 
 class File {
+	public $type = 'file';
 	public $fullpath;
 
 	public function __construct($path) {
